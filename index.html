@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <h1>FARTY MUSHROOM</h1>
-        <h2>Start Game</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FARTY MUSHROOM</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Monofett&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monofett&family=Rubik+Mono+One&family=VT323&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- PANTALLA DE INICIO -->
+    <div id="start-screen" class="container">
+      <h1>FARTY MUSHROOM</h1>
+      <button id="start-btn">START 💨</button>
+      <div id="game-rules">
+        <ul>
+          <li>Durante el juego múltiples objetos caerán del cielo.</li>
+          <li>
+            Como TÚ eres un honguito intolerante a la lactosa, deberas esquivar
+            los quesitos y la leche
+          </li>
+          <li>El vino y la cerveza te daran puntos de vida</li>
+          <li>Para moverte deberas clickar las fechas de  izq y dcha</li>
+          <li>
+            BONO: podrás disparar pastillas para eliminar los quesitos y la
+            leche
+          </li>
+        </ul>
+      </div>
     </div>
-    
-</body>
+
+    <!-- PANTALLA DE JUEGO -->
+    <div id="game-screen" class="container">
+      <button id="vida">vida ❤️</button>
+      <div id="game-box">
+        <!-- Los elementos del juego serán añadidos desde JS con manipulación de DOM -->
+      </div>
+    </div>
+
+    <!-- PANTALLA FINAL -->
+    <div id="game-over-screen" class="container">
+      <button id="re-start">Play Again!</button>
+    </div>
+
+    <script src="./main.js"></script>
+    <script src="./honguito.js"></script>
+    <script src="./fallingObjectsBad.js"></script>
+    <script src="./fallingObjectsGood.js"></script>
+  </body>
 </html>
