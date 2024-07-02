@@ -19,12 +19,13 @@ class Honguito {
   }
 
   movement(posicion) {
-    if (posicion === "right") {
+    if (posicion === "right" && (this.x + this.w) <= gameBox.offsetWidth) {
       this.x += this.movementSpeed;
       this.honguito.style.left = `${this.x}px`;
-    } else if (posicion === "left") {
+    } else if (posicion === "left" && this.x >= 0) {
       this.x -= this.movementSpeed;
       this.honguito.style.left = `${this.x}px`;
     }
+
   }
 }

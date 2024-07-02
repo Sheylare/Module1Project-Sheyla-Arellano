@@ -3,11 +3,13 @@
 // ? CREAR CLASES DEL JUEGO
 // ? CREAR EL GAME LOOP
 
-//* ELEMENTOS PRINCIPALES DEL DOM
+//* ELEMENTOS PRINCIPALES 
 
 const startScreenNode = document.querySelector("#start-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const endScreenNode = document.querySelector("#game-over-screen");
+const scoreNode = document.querySelector("#score")
+
 
 // !BOTONES
 
@@ -33,12 +35,13 @@ let badObjIntervalId = null;
 function startGame() {
   startScreenNode.style.display = "none";
   gameScreenNode.style.display = "flex";
-  endScreenNode.style.display = "none";
+  //endScreenNode.style.display = "none";
 
   honguitoObj = new Honguito();
 
   mainIntervalID = setInterval(() => {
     gameLoop();
+
   }, Math.round(1000 / 60));
 
   goodObjIntervalId = setInterval(() => {
@@ -57,6 +60,10 @@ function gameLoop() {
   fallingArrBad.forEach((eachObj) => {
     eachObj.automaticMovement();
   });
+
+ colisionHonguitoObjBad();
+ colisionHonguitoObjGood();
+
 }
 
 function goodObjAppear() {
@@ -86,16 +93,44 @@ function badObjAppear() {
   fallingArrBad.push(badObj);
 }
 
-function colisonHonguitoObjBad() {
+function colisionHonguitoObjBad() {
   // si te toca una leche o un quesito mueres
-  //sonido de pedito cuando te cae uno encima
-  //el objeto debe desaparecer
+  fallingArrBad.forEach((eachBadObj) =>{
+
+    if (
+        eachBadObj.x < honguitoObj.x + honguitoObj.w &&
+        eachBadObj.x + eachBadObj.w > honguitoObj.x &&
+        eachBadObj.y < honguitoObj.y + honguitoObj.h &&
+        eachBadObj.y + eachBadObj.h > honguitoObj.y
+      ) {
+        // Collision detected!
+        //console.log("lactosa colisiono con honguito")
+        gameOver()
+      } 
+
+  })
+ 
 }
 
-function colisonHonguitoObjGood() {
-  // si te toca una cerveza, o vino aumenta tu vida.
-  // los objetos una vez que te toquen deben desaparecer
-  // debe haber una barra que muestre la vida
+function colisionHonguitoObjGood() {
+  // si te toca una cerveza, ganas puntos
+
+  fallingArrGood.forEach((eachGoodObj, index)=>{
+
+    if (
+        eachGoodObj.x < honguitoObj.x + honguitoObj.w &&
+        eachGoodObj.x + eachGoodObj.w > honguitoObj.x &&
+        eachGoodObj.y < honguitoObj.y + honguitoObj.h &&
+        eachGoodObj.y + eachGoodObj.h > honguitoObj.y
+      ){
+        let objColisionado = fallingArrGood[index]
+        fallingArrGood.splice(index, 1);
+        objColisionado.node.remove();
+        scoreNode.innerText++
+      }
+
+  })
+  
 }
 
 function gameOver() {
