@@ -1,6 +1,22 @@
 body {
   margin: 0;
   background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+}
+
+#inicio {
+  background-image: url(./images/pantalla_inicio.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  max-width: 1024px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #start-btn {
@@ -8,11 +24,10 @@ body {
   color: white;
   text-align: center;
   font-size: 23px;
-  margin-top: 50px;
-  margin-bottom: 50px;
   border-radius: 20px;
   font-family: "VT323", monospace;
   padding-bottom: 5px;
+  margin-bottom: 33%;
 }
 
 .container {
@@ -20,10 +35,11 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 50px;
+  width: 60%;
 }
 
 #game-rules {
-  background-color: rgb(197, 119, 132);
+  background-color: rgb(197, 119, 132, 0.7);
   border: 5px solid rgb(221, 56, 56);
   display: flex;
   flex-direction: column;
@@ -38,11 +54,11 @@ body {
   width: 90%;
   height: 800px;
 
-  position: relative; /* permite posicionar los elementos de forma absoluta dentro del game-box */
-  overflow: hidden; /* previene que los elementos salgan visualmente del game-box */
-  user-select: none; /* previene que los elementos del game-box sean resaltados al hacer click */
+  position: relative;
+  overflow: hidden;
+  user-select: none;
 
-  background-image: url(./images/Valley2.png);
+  background-image: url(./images/fondo_juego.png);
   background-position: center;
   background-size: cover;
 }
@@ -51,47 +67,48 @@ body {
   pointer-events: none; /* previene que todos los elementos del game-box sean arrastrados al clickar sobre ellos */
 }
 
-h1 {
-  font-family: "Monofett", monospace;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 90px;
-}
-
 #start-screen {
-  background-color: rgb(194, 123, 123);
+  background-color: rgb(134, 179, 208);
   color: white;
   font-family: "VT323", monospace;
   font-weight: 400;
   font-style: normal;
   font-size: 28px;
-  background-image: url(./images/fondo.png);
-  background-position: center;
-  background-size: cover;
   position: relative;
   margin-top: 50px;
-  padding: 100px;
+  display: flex;
+  flex-direction: column;
 }
-
-#game-screen, #game-over-screen {
+#game-screen,
+#game-over-screen {
   display: none;
 }
 
 #game-over-screen {
-  background-color: rgb(194, 123, 123);
-  color: white;
+  background-image: url(./images/pantalla_inicio.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  max-width: 1024px;
+  aspect-ratio: 1 / 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-family: "VT323", monospace;
   font-weight: 400;
   font-style: normal;
-  font-size: 40px;
+  font-size: 25px;
+}
+
+#final {
+  background-color: rgb(118, 170, 216, 0.8);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-image: url(./images/fondo.png);
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  margin-top: 100px;
-  padding: 200px;
-  height: 400px;
+  padding: 10px;
 }
 
 #re-start {
@@ -100,13 +117,13 @@ h1 {
   text-align: center;
   font-size: 23px;
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
   border-radius: 10px;
   font-family: "VT323", monospace;
   padding-bottom: 5px;
 }
 
-#game-screen span{
+#game-screen span {
   font-family: "VT323", monospace;
   font-weight: 400;
   font-style: normal;

@@ -3,13 +3,13 @@
 // ? CREAR CLASES DEL JUEGO
 // ? CREAR EL GAME LOOP
 
-//* ELEMENTOS PRINCIPALES 
+//* ELEMENTOS PRINCIPALES
 
 const startScreenNode = document.querySelector("#start-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const endScreenNode = document.querySelector("#game-over-screen");
-const scoreNode = document.querySelector("#score")
-
+const endScreenContentNode = document.querySelector("#final");
+const scoreNode = document.querySelector("#score");
 
 // !BOTONES
 
@@ -29,19 +29,28 @@ let fallingArrBad = [];
 let mainIntervalID = null;
 let goodObjIntervalId = null;
 let badObjIntervalId = null;
+let walkingIntervalId = null;
+
+let audio = null;
+
+
 
 //* FUNCIONES GLOBALES DEL JUEGO
 
 function startGame() {
   startScreenNode.style.display = "none";
   gameScreenNode.style.display = "flex";
-  //endScreenNode.style.display = "none";
+  endScreenNode.style.display = "none";
 
   honguitoObj = new Honguito();
+  audio = new Audio("./images/musica_fondo.mp3")
+  audio.loop = true;
+  audio.play()
+  fallingArrGood = [];
+  fallingArrBad = [];
 
   mainIntervalID = setInterval(() => {
     gameLoop();
-
   }, Math.round(1000 / 60));
 
   goodObjIntervalId = setInterval(() => {
@@ -51,6 +60,14 @@ function startGame() {
   badObjIntervalId = setInterval(() => {
     badObjAppear();
   }, Math.random() * 500 + 500);
+
+  walkingIntervalId = setInterval(() => {
+    // A mi honguito con el que estoy jugando, quiero ir cambiandole la imagen.
+    // Mi honguito empieza con el mushroom 1 -> honguitoObj.node.src = "mushroom1"
+    
+    honguitoObj.changeImage()
+    
+  }, 150);
 }
 
 function gameLoop() {
@@ -61,9 +78,8 @@ function gameLoop() {
     eachObj.automaticMovement();
   });
 
- colisionHonguitoObjBad();
- colisionHonguitoObjGood();
-
+  colisionHonguitoObjBad();
+  colisionHonguitoObjGood();
 }
 
 function goodObjAppear() {
@@ -95,42 +111,36 @@ function badObjAppear() {
 
 function colisionHonguitoObjBad() {
   // si te toca una leche o un quesito mueres
-  fallingArrBad.forEach((eachBadObj) =>{
-
+  fallingArrBad.forEach((eachBadObj) => {
     if (
-        eachBadObj.x < honguitoObj.x + honguitoObj.w &&
-        eachBadObj.x + eachBadObj.w > honguitoObj.x &&
-        eachBadObj.y < honguitoObj.y + honguitoObj.h &&
-        eachBadObj.y + eachBadObj.h > honguitoObj.y
-      ) {
-        // Collision detected!
-        //console.log("lactosa colisiono con honguito")
-        gameOver()
-      } 
-
-  })
- 
+      eachBadObj.x < honguitoObj.x + honguitoObj.w &&
+      eachBadObj.x + eachBadObj.w > honguitoObj.x &&
+      eachBadObj.y < honguitoObj.y + honguitoObj.h &&
+      eachBadObj.y + eachBadObj.h > honguitoObj.y
+    ) {
+      // Collision detected!
+      //console.log("lactosa colisiono con honguito")
+      gameOver();
+    }
+  });
 }
 
 function colisionHonguitoObjGood() {
   // si te toca una cerveza, ganas puntos
 
-  fallingArrGood.forEach((eachGoodObj, index)=>{
-
+  fallingArrGood.forEach((eachGoodObj, index) => {
     if (
-        eachGoodObj.x < honguitoObj.x + honguitoObj.w &&
-        eachGoodObj.x + eachGoodObj.w > honguitoObj.x &&
-        eachGoodObj.y < honguitoObj.y + honguitoObj.h &&
-        eachGoodObj.y + eachGoodObj.h > honguitoObj.y
-      ){
-        let objColisionado = fallingArrGood[index]
-        fallingArrGood.splice(index, 1);
-        objColisionado.node.remove();
-        scoreNode.innerText++
-      }
-
-  })
-  
+      eachGoodObj.x < honguitoObj.x + honguitoObj.w &&
+      eachGoodObj.x + eachGoodObj.w > honguitoObj.x &&
+      eachGoodObj.y < honguitoObj.y + honguitoObj.h &&
+      eachGoodObj.y + eachGoodObj.h > honguitoObj.y
+    ) {
+      let objColisionado = fallingArrGood[index];
+      fallingArrGood.splice(index, 1);
+      objColisionado.node.remove();
+      scoreNode.innerText++;
+    }
+  });
 }
 
 function gameOver() {
@@ -138,8 +148,21 @@ function gameOver() {
   clearInterval(goodObjIntervalId);
   clearInterval(badObjIntervalId);
 
+  honguitoObj.node.remove();
+  scoreNode.innerText = 0;
+  gameBox.innerHTML = null;
+  audio.loop = false;
+  audio.pause()
+
+  // tienes que acceder a todos los nodos del juego y borrarlos.
+
   gameScreenNode.style.display = "none";
   endScreenNode.style.display = "flex";
+}
+
+function reStartGame() {
+  startScreenNode.style.display = "flex";
+  endScreenNode.style.display = "none";
 }
 
 //* EVENT LISTENERS
@@ -154,4 +177,8 @@ window.addEventListener("keydown", (event) => {
   } else if (event.key === "ArrowLeft") {
     honguitoObj.movement("left");
   }
+});
+
+replayBtn.addEventListener("click", () => {
+  reStartGame();
 });
