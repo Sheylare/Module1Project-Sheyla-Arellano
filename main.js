@@ -6,6 +6,7 @@
 //* ELEMENTOS PRINCIPALES
 
 const startScreenNode = document.querySelector("#start-screen");
+const rulesScreen = document.querySelector("#game-rules");
 const gameScreenNode = document.querySelector("#game-screen");
 const endScreenNode = document.querySelector("#game-over-screen");
 const endScreenContentNode = document.querySelector("#final");
@@ -15,6 +16,8 @@ const scoreNode = document.querySelector("#score");
 
 const startBtn = document.querySelector("#start-btn");
 const replayBtn = document.querySelector("#re-start");
+const instruccionBtn = document.querySelector("#instrucciones");
+const closeBtn = document.querySelector("#cerrar")
 
 // !GAMEBOX
 
@@ -33,19 +36,18 @@ let walkingIntervalId = null;
 
 let audio = null;
 
-
-
 //* FUNCIONES GLOBALES DEL JUEGO
 
 function startGame() {
   startScreenNode.style.display = "none";
+  rulesScreen.style.display = "none";
   gameScreenNode.style.display = "flex";
   endScreenNode.style.display = "none";
 
   honguitoObj = new Honguito();
-  audio = new Audio("./images/musica_fondo.mp3")
+  audio = new Audio("./images/musica_fondo.mp3");
   audio.loop = true;
-  audio.play()
+  audio.play();
   fallingArrGood = [];
   fallingArrBad = [];
 
@@ -62,11 +64,7 @@ function startGame() {
   }, Math.random() * 500 + 500);
 
   walkingIntervalId = setInterval(() => {
-    // A mi honguito con el que estoy jugando, quiero ir cambiandole la imagen.
-    // Mi honguito empieza con el mushroom 1 -> honguitoObj.node.src = "mushroom1"
-    
-    honguitoObj.changeImage()
-    
+    honguitoObj.changeImage();
   }, 150);
 }
 
@@ -152,7 +150,7 @@ function gameOver() {
   scoreNode.innerText = 0;
   gameBox.innerHTML = null;
   audio.loop = false;
-  audio.pause()
+  audio.pause();
 
   // tienes que acceder a todos los nodos del juego y borrarlos.
 
@@ -182,3 +180,11 @@ window.addEventListener("keydown", (event) => {
 replayBtn.addEventListener("click", () => {
   reStartGame();
 });
+
+instruccionBtn.addEventListener("click", () => {
+  rulesScreen.style.display = "flex";
+});
+
+closeBtn.addEventListener("click", () => {
+    rulesScreen.style.display = "none";
+})
