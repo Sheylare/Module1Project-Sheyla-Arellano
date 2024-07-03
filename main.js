@@ -17,7 +17,7 @@ const scoreNode = document.querySelector("#score");
 const startBtn = document.querySelector("#start-btn");
 const replayBtn = document.querySelector("#re-start");
 const instruccionBtn = document.querySelector("#instrucciones");
-const closeBtn = document.querySelector("#cerrar")
+const closeBtn = document.querySelector("#cerrar");
 
 // !GAMEBOX
 
@@ -28,6 +28,7 @@ const gameBox = document.querySelector("#game-box");
 let honguitoObj = null;
 let fallingArrGood = [];
 let fallingArrBad = [];
+let pillsArr = [];
 
 let mainIntervalID = null;
 let goodObjIntervalId = null;
@@ -75,9 +76,13 @@ function gameLoop() {
   fallingArrBad.forEach((eachObj) => {
     eachObj.automaticMovement();
   });
+  pillsArr.forEach((eachPill) => {
+    eachPill.automaticMovement();
+  });
 
   colisionHonguitoObjBad();
   colisionHonguitoObjGood();
+  colisionPillsObjBad();
 }
 
 function goodObjAppear() {
@@ -106,6 +111,10 @@ function badObjAppear() {
   let badObj = new FallingObjBad(randomX, image);
   fallingArrBad.push(badObj);
 }
+function pillAppear(){
+ let pillObj = new ShootPills(honguitoObj.x +(honguitoObj.w / 2));
+ pillsArr.push(pillObj)
+}
 
 function colisionHonguitoObjBad() {
   // si te toca una leche o un quesito mueres
@@ -120,6 +129,26 @@ function colisionHonguitoObjBad() {
       //console.log("lactosa colisiono con honguito")
       gameOver();
     }
+  });
+}
+
+function colisionPillsObjBad() {
+  // hacer que cada pill colisione con un queso o leche (las dos son arrays)
+
+  pillsArr.forEach((eachPill, indexPill) => {
+    fallingArrBad.forEach((eachBadObj, indexBadObj) => {
+      if (
+        eachPill.x < eachBadObj.x + eachBadObj.w &&
+        eachPill.x + eachPill.w > eachBadObj.x &&
+        eachPill.y < eachBadObj.y + eachBadObj.h &&
+        eachPill.y + eachPill.h > eachBadObj.y
+      ) {
+        fallingArrBad.splice(indexBadObj, 1)
+        eachBadObj.node.remove()
+        pillsArr.splice(indexPill,1)
+        eachPill.node.remove()
+      }
+    });
   });
 }
 
@@ -186,5 +215,12 @@ instruccionBtn.addEventListener("click", () => {
 });
 
 closeBtn.addEventListener("click", () => {
-    rulesScreen.style.display = "none";
+  rulesScreen.style.display = "none";
+});
+
+window.addEventListener("keydown", (event)=>{
+ if(event.code === "Space"){
+  //console.log('Disparo!');
+  pillAppear();
+ }
 })
