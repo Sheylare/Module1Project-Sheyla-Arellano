@@ -6,7 +6,8 @@ const gameScreenNode = document.querySelector("#game-screen");
 const endScreenNode = document.querySelector("#game-over-screen");
 const endScreenContentNode = document.querySelector("#final");
 const scoreNode = document.querySelector("#score");
-const scoreFinal =document.querySelector("#final-score");
+const scoreFinal = document.querySelector("#final-score");
+const vidasNode = document.querySelector("#vidas");
 
 // !BOTONES
 
@@ -31,7 +32,12 @@ let goodObjIntervalId = null;
 let badObjIntervalId = null;
 let walkingIntervalId = null;
 
-let audio = null;
+let audio = new Audio("./images/musica_fondo.mp3");
+audio.volume = 0.05;
+let audio2 = new Audio(
+  "./images/mixkit-player-jumping-in-a-video-game-2043.wav"
+);
+audio2.volume = 0.1;
 
 //* FUNCIONES GLOBALES DEL JUEGO
 
@@ -42,10 +48,10 @@ function startGame() {
   endScreenNode.style.display = "none";
 
   honguitoObj = new Honguito();
-  audio = new Audio("./images/musica_fondo.mp3");
+
   audio.loop = true;
   audio.play();
-  audio.volume = 0.05;
+
   fallingArrGood = [];
   fallingArrBad = [];
 
@@ -108,23 +114,40 @@ function badObjAppear() {
   let badObj = new FallingObjBad(randomX, image);
   fallingArrBad.push(badObj);
 }
-function pillAppear(){
- let pillObj = new ShootPills(honguitoObj.x +(honguitoObj.w / 2));
- pillsArr.push(pillObj)
+function pillAppear() {
+  let pillObj = new ShootPills(honguitoObj.x + honguitoObj.w / 2);
+  pillsArr.push(pillObj);
+  audio2.currentTime = 0;
+  audio2.pause();
+  audio2.play();
 }
 
 function colisionHonguitoObjBad() {
   // si te toca una leche o un quesito mueres
-  fallingArrBad.forEach((eachBadObj) => {
+  fallingArrBad.forEach((eachBadObj, index) => {
     if (
       eachBadObj.x < honguitoObj.x + honguitoObj.w &&
       eachBadObj.x + eachBadObj.w > honguitoObj.x &&
       eachBadObj.y < honguitoObj.y + honguitoObj.h &&
       eachBadObj.y + eachBadObj.h > honguitoObj.y
     ) {
-      // Collision detected!
-      //console.log("lactosa colisiono con honguito")
-      gameOver();
+      fallingArrBad.splice(index, 1);
+      eachBadObj.node.remove();
+
+      if (honguitoObj.vida === 3) {
+        honguitoObj.vida -= 1;
+        vidasNode.innerText = "❤️❤️";
+        /*let peito = document.createElement("img");
+        peito.src = "./images/pedo.png";
+        gameBox.append(peito);
+        peito.style.top = 5;
+        peito.style.left = 5;*/
+      } else if (honguitoObj.vida === 2) {
+        honguitoObj.vida -= 1;
+        vidasNode.innerText = "❤️";
+      } else if (honguitoObj.vida === 1) {
+        gameOver();
+      }
     }
   });
 }
@@ -140,10 +163,10 @@ function colisionPillsObjBad() {
         eachPill.y < eachBadObj.y + eachBadObj.h &&
         eachPill.y + eachPill.h > eachBadObj.y
       ) {
-        fallingArrBad.splice(indexBadObj, 1)
-        eachBadObj.node.remove()
-        pillsArr.splice(indexPill,1)
-        eachPill.node.remove()
+        fallingArrBad.splice(indexBadObj, 1);
+        eachBadObj.node.remove();
+        pillsArr.splice(indexPill, 1);
+        eachPill.node.remove();
       }
     });
   });
@@ -173,17 +196,15 @@ function gameOver() {
   clearInterval(badObjIntervalId);
 
   honguitoObj.node.remove();
-  let puntuacion = scoreNode.innerText
-  scoreFinal.innerText = puntuacion
+  let puntuacion = scoreNode.innerText;
+  scoreFinal.innerText = puntuacion;
   gameBox.innerHTML = null;
   audio.loop = false;
   audio.pause();
-
-  // tienes que acceder a todos los nodos del juego y borrarlos.
+  audio2.pause();
 
   gameScreenNode.style.display = "none";
   endScreenNode.style.display = "flex";
-  
 }
 
 function reStartGame() {
@@ -218,9 +239,10 @@ closeBtn.addEventListener("click", () => {
   rulesScreen.style.display = "none";
 });
 
-window.addEventListener("keydown", (event)=>{
- if(event.code === "Space"){
-  //console.log('Disparo!');
-  pillAppear();
- }
-})
+window.addEventListener("keydown", (event) => {
+  if (event.code === "Space") {
+    //console.log('Disparo!');
+
+    pillAppear();
+  }
+});

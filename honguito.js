@@ -15,8 +15,9 @@ class Honguito {
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
 
-    this.movementSpeed = 20;
+    this.movementSpeed = 22;
     this.imageNumber = 1
+    this.vida = 3;
   }
 
   movement(posicion) {
