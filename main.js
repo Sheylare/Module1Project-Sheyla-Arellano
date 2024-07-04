@@ -1,8 +1,3 @@
-// * PLANIFICACION
-// ? AÑADIR CARPETA DE ELEMENTOS IMG
-// ? CREAR CLASES DEL JUEGO
-// ? CREAR EL GAME LOOP
-
 //* ELEMENTOS PRINCIPALES
 
 const startScreenNode = document.querySelector("#start-screen");
@@ -11,6 +6,7 @@ const gameScreenNode = document.querySelector("#game-screen");
 const endScreenNode = document.querySelector("#game-over-screen");
 const endScreenContentNode = document.querySelector("#final");
 const scoreNode = document.querySelector("#score");
+const scoreFinal =document.querySelector("#final-score");
 
 // !BOTONES
 
@@ -49,6 +45,7 @@ function startGame() {
   audio = new Audio("./images/musica_fondo.mp3");
   audio.loop = true;
   audio.play();
+  audio.volume = 0.05;
   fallingArrGood = [];
   fallingArrBad = [];
 
@@ -176,7 +173,8 @@ function gameOver() {
   clearInterval(badObjIntervalId);
 
   honguitoObj.node.remove();
-  scoreNode.innerText = 0;
+  let puntuacion = scoreNode.innerText
+  scoreFinal.innerText = puntuacion
   gameBox.innerHTML = null;
   audio.loop = false;
   audio.pause();
@@ -185,11 +183,13 @@ function gameOver() {
 
   gameScreenNode.style.display = "none";
   endScreenNode.style.display = "flex";
+  
 }
 
 function reStartGame() {
   startScreenNode.style.display = "flex";
   endScreenNode.style.display = "none";
+  scoreNode.innerText = 0;
 }
 
 //* EVENT LISTENERS
