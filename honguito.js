@@ -7,7 +7,7 @@ class Honguito {
     this.w = 100;
     this.h = 100;
     this.x = 0;
-    this.y = 670;
+    this.y = gameBox.offsetHeight - this.h - ((gameBox.offsetHeight*10)/100);
 
     this.node.style.position = "absolute";
     this.node.style.width = `${this.w}px`;

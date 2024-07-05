@@ -82,15 +82,24 @@ body {
   
 }
 
+#fondo-instrucciones {
+  background-color: rgb(32, 5, 26);
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #game-box {
   background-color: rgb(192, 253, 255);
   width: 90%;
-  height: 800px;
-
+  height: 1200px;
+  max-width: 1024px;
+  aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
   user-select: none;
-
   background-image: url(./images/fondo_juego.png);
   background-position: center;
   background-size: cover;
@@ -101,7 +110,6 @@ body {
 }
 
 #start-screen {
-  background-color: rgb(32, 5, 26);
   color: white;
   font-family: "VT323", monospace;
   font-weight: 400;
