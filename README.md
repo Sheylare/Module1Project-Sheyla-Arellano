@@ -20,7 +20,7 @@ Farting Mushroom es un juego para la gente intolerante a la lactosa. Tú eres un
 
 # Backlog Functionalities
 
-- Hacer que el jeugo sea responsivo.
+- Hacer que el juego sea responsivo.
 - Agregar un hongo de un color diferente cuando el puntaje llegue a 50 puntos. 
 - Crear una función que permita al hongo saltar para obtener una inyección que lo hará invencible durante 30 segundos.
 - Agregar distintos efectos de sonido por cada objeto que caiga sobre el hongo.
@@ -112,10 +112,9 @@ Farting Mushroom es un juego para la gente intolerante a la lactosa. Tú eres un
 
 # Extra Links 
 
-### Trello
 
 ### Slides
-[Link](www.your-slides-url-here.com)
+[Presentación](https://www.canva.com/design/DAGKDzPvlQ0/JJWBW_FEcUfhir-_F0pCxQ/view?utm_content=DAGKDzPvlQ0&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 ## Deploy
-[Link](www.your-deploy-url-here.com)
+[Juego](https://sheylare.github.io/Module1Project-Sheyla-Arellano/)
