@@ -123,7 +123,6 @@ function pillAppear() {
 }
 
 function colisionHonguitoObjBad() {
-  // si te toca una leche o un quesito mueres
   fallingArrBad.forEach((eachBadObj, index) => {
     if (
       eachBadObj.x < honguitoObj.x + honguitoObj.w &&
@@ -136,15 +135,10 @@ function colisionHonguitoObjBad() {
 
       if (honguitoObj.vida === 3) {
         honguitoObj.vida -= 1;
-        vidasNode.innerText = "❤️❤️";
-        /*let peito = document.createElement("img");
-        peito.src = "./images/pedo.png";
-        gameBox.append(peito);
-        peito.style.top = 5;
-        peito.style.left = 5;*/
+        vidasNode.innerText = "💨💨";
       } else if (honguitoObj.vida === 2) {
         honguitoObj.vida -= 1;
-        vidasNode.innerText = "❤️";
+        vidasNode.innerText = "💨";
       } else if (honguitoObj.vida === 1) {
         gameOver();
       }
@@ -211,6 +205,7 @@ function reStartGame() {
   startScreenNode.style.display = "flex";
   endScreenNode.style.display = "none";
   scoreNode.innerText = 0;
+  vidasNode.innerText = "💨💨💨";
 }
 
 //* EVENT LISTENERS
@@ -241,8 +236,6 @@ closeBtn.addEventListener("click", () => {
 
 window.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
-    //console.log('Disparo!');
-
     pillAppear();
   }
 });

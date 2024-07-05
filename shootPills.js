@@ -18,7 +18,7 @@ class ShootPills {
     this.speed = 5;
   }
 
-  automaticMovement(){
+  automaticMovement() {
     this.y -= this.speed;
     this.node.style.top = `${this.y}px`;
   }
