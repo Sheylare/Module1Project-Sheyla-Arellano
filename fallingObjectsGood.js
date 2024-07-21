@@ -20,7 +20,7 @@ class FallingObjGood {
     this.node.style.width = `${this.w}px`;
     this.node.style.height = `${this.h}px`;
     
-    this.speed = 5;
+    this.speed = 8;
 
   }
 
